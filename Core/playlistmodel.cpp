@@ -5,8 +5,8 @@
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    m_data.append(QString("Grib.flac"));
-    m_data.append(QString("Try.mp3"));
+    m_data.append(QPair<QString, QString>("Grib.flac", "00:23:44"));
+    m_data.append(QPair<QString, QString>("Try.flac", "00:23:44"));
 
 }
 
@@ -20,17 +20,34 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (index.isValid() && role == Qt::DisplayRole) {
-        int row = index.row();
-        return m_data[row];
+    if (!index.isValid() || index.row() >= m_data.size())
+        return QVariant();
+
+    if(role == TrackName) {
+        return m_data[index.row()].first;
+    }
+    if(role == TrackDuration) {
+        return m_data[index.row()].second;
     }
 
     return QVariant();
+    // if (index.isValid() && role == Qt::DisplayRole) {
+    //     int row = index.row();
+    //     return m_data[row];
+    // }
 }
 
-void PlaylistModel::addTrack(QString newTrack)
+QHash<int, QByteArray> PlaylistModel::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[TrackName] = "name";
+    roles[TrackDuration] = "duration";
+    return roles;
+}
+
+void PlaylistModel::addTrack(QString newTrack, QString duration)
 {
     beginInsertRows(QModelIndex(), m_data.size(), m_data.size());
-    m_data.append(QString(newTrack));
+    m_data.append(QPair<QString, QString>(newTrack, duration));
     endInsertRows();
 }

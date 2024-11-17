@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 qt_standard_project_setup()
 
@@ -51,7 +52,7 @@ qt_add_qml_module(appMediaPlayer
 
 target_link_libraries(appMediaPlayer
     PUBLIC Qt6::Multimedia
-
+    PRIVATE Qt6::Concurrent
     PRIVATE Qt6::Quick
 
 )

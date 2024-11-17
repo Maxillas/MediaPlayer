@@ -97,14 +97,12 @@ Rectangle {
         topMargin: 5
       }
       imageSource: {
-        if(!AudioPlayer) {
-        return ""; //проверка на существование объекта с++
-        }
+        if(!AudioPlayer) {return "";} //проверка на существование объекта с++
         !AudioPlayer.isPlaying ? "../Resources/play.png" : "../Resources/pause.png"
       }
 
       onClicked: {
-        AudioPlayer.play();
+        AudioPlayer.isPlaying ? AudioPlayer.pause() : AudioPlayer.play(false)
       }
     }
     ButtonRound {
@@ -126,6 +124,9 @@ Rectangle {
         leftMargin: 25
       }
       imageSource: "../Resources/repeat.png"
+      onClicked: {
+        AudioPlayer.repeat()
+      }
     }
 
 

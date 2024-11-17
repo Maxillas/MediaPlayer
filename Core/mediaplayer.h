@@ -10,20 +10,23 @@ class MediaPlayer : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged FINAL)
+    Q_PROPERTY(bool isPlaying READ isPlaying WRITE setIsPlaying NOTIFY isPlayingChanged FINAL)
 
 
 public:
     explicit MediaPlayer(QObject *parent = nullptr);
+
 
     bool isPlaying() const;
 
    // PlaylistModel& playList();
     PlaylistManager& playListManager();
 
+    void setIsPlaying(bool newIsPlaying);
 
 public slots:
-    void play();
+    void play(bool isChangeCurrentTrack);
+    void pause();
     void stop();
     void repeat();
     void next();
@@ -39,6 +42,7 @@ private:
     QAudioOutput* m_audioOutput;
 
     PlaylistManager m_playListManager;
+    bool m_isPlaying = false;
 };
 
 #endif // MEDIAPLAYER_H

@@ -8,16 +8,24 @@ class PlaylistModel : public QAbstractListModel
     Q_OBJECT
 
 public:
+
+    enum PairRoles {
+        TrackName = Qt::UserRole + 1,
+        TrackDuration
+    };
+
     explicit PlaylistModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void addTrack(QString newTrack);
+    QHash<int, QByteArray> roleNames() const override;
+
+    void addTrack(QString newTrack, QString duration);
 
 private:
-    QVector<QString> m_data;
+    QList<QPair<QString, QString>> m_data;
 };
 
 #endif // PLAYLISTMODEL_H

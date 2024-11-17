@@ -54,15 +54,3 @@ void PlaylistManager::setCurrentTrack(QString newCurrentTrack)
     m_currentTrack = newCurrentTrack;
     emit currentTrackChanged();
 }
-
-QString PlaylistManager::calculateDuration(const QUrl& track)
-{
-    QMediaPlayer player;
-    player.setSource(track);
-
-    connect(&player, &QMediaPlayer::durationChanged, [](qint64 duration) {
-        qDebug() << "Длительность трека:" << duration;
-    });
-
-    return QString::number(player.duration());
-}

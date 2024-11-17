@@ -28,10 +28,6 @@ signals:
 private:
     QString m_currentTrack;
 
-    QString calculateDuration(const QUrl& track);
-
-
-
     void addTracks(qint64 duration);
 
 

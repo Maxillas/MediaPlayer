@@ -22,10 +22,10 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
-    void addTrack(QString newTrack, QString duration);
+    void addTrack(QString newTrack, quint64 duration);
 
 private:
-    QList<QPair<QString, QString>> m_data;
+    QList<QPair<QString, quint64>> m_data;
 };
 
 #endif // PLAYLISTMODEL_H

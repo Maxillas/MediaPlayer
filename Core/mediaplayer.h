@@ -12,6 +12,9 @@ class MediaPlayer : public QObject
 
     Q_PROPERTY(bool isPlaying READ isPlaying WRITE setIsPlaying NOTIFY isPlayingChanged FINAL)
 
+    Q_PROPERTY(quint64 duration READ duration NOTIFY durationChanged FINAL)
+    Q_PROPERTY(quint64 position READ position NOTIFY positionChanged FINAL)
+
 
 public:
     explicit MediaPlayer(QObject *parent = nullptr);
@@ -24,6 +27,9 @@ public:
 
     void setIsPlaying(bool newIsPlaying);
 
+    quint64 duration() const;
+    quint64 position() const;
+
 public slots:
     void play(bool isChangeCurrentTrack);
     void pause();
@@ -31,11 +37,21 @@ public slots:
     void repeat();
     void next();
     void prev();
+
+    void setPositon(float positionPercent);
+    // quint64 currentTrackDuration();
+    // quint64 currentTrackPosition_msec(); //в мсек
+    // uint8_t currentTrackPosition_percent(); //в процентах
+
 signals:
 
     void isPlayingChanged();
 
 
+
+    void durationChanged(qint64 position);
+
+    void positionChanged(qint64 position);
 
 private:
     QMediaPlayer* m_mediaPlayer;
@@ -43,6 +59,8 @@ private:
 
     PlaylistManager m_playListManager;
     bool m_isPlaying = false;
+    quint64 m_duration;
+    quint64 m_position;
 };
 
 #endif // MEDIAPLAYER_H

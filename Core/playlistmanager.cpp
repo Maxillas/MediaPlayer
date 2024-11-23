@@ -25,21 +25,12 @@ void PlaylistManager::addTrack(const QList<QUrl> &files)
         m_players.append(player);
         player->setSource(url);
         connect(player, &QMediaPlayer::durationChanged, this, [this, url, player](qint64 duration) {
-            qint64 hours = duration / 3600000;
-            qint64 minutes = (duration % 3600000) / 60000;
-            qint64 seconds = (duration % 60000) / 1000;
-            QString durationStr = QString::asprintf("%02lld:%02lld:%02lld", hours, minutes, seconds);
-
-            m_playlist.addTrack(url.toLocalFile(), durationStr);
+            m_playlist.addTrack(url.toLocalFile(), duration);
             m_players.removeOne(player);
             player->deleteLater();
+            setPlaylistDuration(m_playlistDuration + duration);
         });
     }
-}
-
-void PlaylistManager::addTracks(qint64 duration)
-{
-    qDebug() << "Длительность трека:" << QString::number(duration);
 }
 
 QString PlaylistManager::currentTrack() const
@@ -53,4 +44,17 @@ void PlaylistManager::setCurrentTrack(QString newCurrentTrack)
         return;
     m_currentTrack = newCurrentTrack;
     emit currentTrackChanged();
+}
+
+quint64 PlaylistManager::playlistDuration() const
+{
+    return m_playlistDuration;
+}
+
+void PlaylistManager::setPlaylistDuration(quint64 newPlaylistDuration)
+{
+    if (m_playlistDuration == newPlaylistDuration)
+        return;
+    m_playlistDuration = newPlaylistDuration;
+    emit playlistDurationChanged();
 }

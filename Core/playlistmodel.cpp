@@ -5,8 +5,6 @@
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    m_data.append(QPair<QString, QString>("Grib.flac", "00:23:44"));
-    m_data.append(QPair<QString, QString>("Try.flac", "00:23:44"));
 
 }
 
@@ -45,9 +43,9 @@ QHash<int, QByteArray> PlaylistModel::roleNames() const
     return roles;
 }
 
-void PlaylistModel::addTrack(QString newTrack, QString duration)
+void PlaylistModel::addTrack(QString newTrack, quint64 duration)
 {
     beginInsertRows(QModelIndex(), m_data.size(), m_data.size());
-    m_data.append(QPair<QString, QString>(newTrack, duration));
+    m_data.append(QPair<QString, quint64>(newTrack, duration));
     endInsertRows();
 }

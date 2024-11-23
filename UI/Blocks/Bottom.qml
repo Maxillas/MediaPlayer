@@ -9,6 +9,16 @@ Rectangle {
   property color backgroundColor: "#043544"
   property color transparentColor: Qt.alpha(backgroundColor, 0)
 
+  function formatDuration(duration) {
+    let hours  = Math.floor(duration / 3600000);
+    let minutes = Math.floor((duration % 3600000) / 60000);
+    let secs = Math.floor((duration % 60000) / 1000);
+
+    return ("0" + hours).slice(-2) + ":" +
+           ("0" + minutes).slice(-2) + ":" +
+           ("0" + secs).slice(-2);
+  }
+
   // height: root.height * 1/3
   // width: root.width
   // color: transparentColor
@@ -26,8 +36,10 @@ Rectangle {
     anchors.top: progressBar.bottom
     anchors.topMargin: 10
     anchors.leftMargin: 5
-    text: "00:59"
-    //font.family: "Arial"
+    text: {
+      if(!PlayListManager) {return "";}
+      formatDuration(AudioPlayer.position)
+    }
     font.pointSize: 12
     color: textColor
   }
@@ -38,7 +50,10 @@ Rectangle {
     anchors.top: progressBar.bottom
     anchors.topMargin: 10
     anchors.rightMargin: 5
-    text: "30:00"
+    text: {
+      if(!PlayListManager) {return "";}
+      formatDuration(AudioPlayer.duration)
+    }
     font.family: "Arial"
     font.pointSize: 12
     color: textColor
@@ -50,7 +65,11 @@ Rectangle {
     anchors.top: progress_time.bottom
     anchors.topMargin: 10
     anchors.leftMargin: 5
-    text: qsTr("Playlist time ") + "0:29:00"
+    text: {
+      if(!PlayListManager) {return "";}
+      qsTr("Playlist time ") + root.formatDuration(PlayListManager.playlistDuration)
+    }
+
     font.family: "Arial"
     font.pointSize: 12
     color: textColor

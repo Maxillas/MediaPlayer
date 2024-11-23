@@ -10,6 +10,7 @@ class PlaylistManager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged FINAL)
+    Q_PROPERTY(quint64 playlistDuration READ playlistDuration WRITE setPlaylistDuration NOTIFY playlistDurationChanged FINAL)
 
 
 public:
@@ -23,8 +24,13 @@ public:
     PlaylistModel m_playlist;
     QString currentTrack() const;
     void setCurrentTrack(QString newCurrentTrackIndex);
+    quint64 playlistDuration() const;
+    void setPlaylistDuration(quint64 newPlaylistDuration);
+
 signals:
     void currentTrackChanged();
+    void playlistDurationChanged();
+
 private:
     QString m_currentTrack;
 
@@ -32,6 +38,7 @@ private:
 
 
     QVector<QMediaPlayer*> m_players; //нужен для расчета длительности треков при загрузке, чистится после использования
+    quint64 m_playlistDuration = 0;
 };
 
 #endif // PLAYLISTMANAGER_H

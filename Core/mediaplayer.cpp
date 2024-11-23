@@ -10,7 +10,9 @@ MediaPlayer::MediaPlayer(QObject *parent)
     m_audioOutput = new QAudioOutput(this);
    // m_audioOutput->setDevice()
     m_mediaPlayer->setAudioOutput(m_audioOutput);
-    //m_mediaPlayer->setSource(QString("Try.mp3"));
+
+    connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this, &MediaPlayer::positionChanged);
+    connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this, &MediaPlayer::durationChanged);
 
     QJSEngine::setObjectOwnership(this, QJSEngine::ObjectOwnership::CppOwnership);
 
@@ -19,7 +21,6 @@ MediaPlayer::MediaPlayer(QObject *parent)
 void MediaPlayer::play(bool isChangeCurrentTrack)
 {
     auto currentTrack = m_mediaPlayer->source();
-
     if(currentTrack.toLocalFile() == m_playListManager.currentTrack() &&
         m_mediaPlayer->isPlaying()) {
         pause();
@@ -32,7 +33,6 @@ void MediaPlayer::play(bool isChangeCurrentTrack)
         setIsPlaying(true);
         return;
     }
-
     m_mediaPlayer->play();
     setIsPlaying(true);
 }
@@ -48,6 +48,8 @@ void MediaPlayer::stop()
     m_mediaPlayer->stop();
     m_mediaPlayer->setSource(QUrl());
     setIsPlaying(false);
+    emit positionChanged(0);
+    emit durationChanged(0);
 }
 
 void MediaPlayer::repeat()
@@ -66,15 +68,15 @@ void MediaPlayer::prev()
 
 }
 
+void MediaPlayer::setPositon(float positionPercent)
+{
+    m_mediaPlayer->setPosition(m_mediaPlayer->duration() * positionPercent / 100);
+}
+
 bool MediaPlayer::isPlaying() const
 {
     return m_isPlaying;
 }
-
-// PlaylistModel &MediaPlayer::playList()
-// {
-//     return m_playListManager.playList();
-// }
 
 PlaylistManager& MediaPlayer::playListManager()
 {
@@ -87,4 +89,14 @@ void MediaPlayer::setIsPlaying(bool newIsPlaying)
         return;
     m_isPlaying = newIsPlaying;
     emit isPlayingChanged();
+}
+
+quint64 MediaPlayer::duration() const
+{
+    return m_mediaPlayer->duration();
+}
+
+quint64 MediaPlayer::position() const
+{
+    return m_mediaPlayer->position();
 }

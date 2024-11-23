@@ -7,6 +7,16 @@ import "../Components"
 Rectangle {
   id: root
 
+  function formatDuration(duration) {
+    let hours  = Math.floor(duration / 3600000);
+    let minutes = Math.floor((duration % 3600000) / 60000);
+    let secs = Math.floor((duration % 60000) / 1000);
+
+    return ("0" + hours).slice(-2) + ":" +
+           ("0" + minutes).slice(-2) + ":" +
+           ("0" + secs).slice(-2);
+  }
+
   ColumnLayout {
     Rectangle {
       id: spacer
@@ -142,7 +152,7 @@ Rectangle {
               rightMargin: 25
               verticalCenter: parent.verticalCenter
             }
-            text: model.duration
+            text: root.formatDuration(model.duration)
             color: "white"
           }
           onClicked: {

@@ -13,6 +13,7 @@ MediaPlayer::MediaPlayer(QObject *parent)
 
     connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this, &MediaPlayer::positionChanged);
     connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this, &MediaPlayer::durationChanged);
+    connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MediaPlayer::onMediaStatusChanged);
 
     QJSEngine::setObjectOwnership(this, QJSEngine::ObjectOwnership::CppOwnership);
 
@@ -71,6 +72,13 @@ void MediaPlayer::prev()
 void MediaPlayer::setPositon(float positionPercent)
 {
     m_mediaPlayer->setPosition(m_mediaPlayer->duration() * positionPercent / 100);
+}
+
+void MediaPlayer::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+    if (status == QMediaPlayer::EndOfMedia) {
+        stop();
+    }
 }
 
 bool MediaPlayer::isPlaying() const

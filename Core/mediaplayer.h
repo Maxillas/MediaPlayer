@@ -57,6 +57,8 @@ private:
     QMediaPlayer* m_mediaPlayer;
     QAudioOutput* m_audioOutput;
 
+    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+
     PlaylistManager m_playListManager;
     bool m_isPlaying = false;
     quint64 m_duration;

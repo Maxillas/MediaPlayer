@@ -11,6 +11,8 @@ MediaPlayer::MediaPlayer(QObject *parent)
     m_mediaPlayer = new QMediaPlayer(this);
     m_audioOutput = new QAudioOutput(this);
 
+    m_settingManager = new SettingsManager(this);
+
    // m_audioOutput->setDevice()
     m_mediaPlayer->setAudioOutput(m_audioOutput);
 
@@ -100,7 +102,7 @@ PlaylistManager& MediaPlayer::playListManager()
 
 SettingsManager const *MediaPlayer::settingsManager()
 {
-    return &m_settingManager;
+    return m_settingManager;
 }
 
 void MediaPlayer::setIsPlaying(bool newIsPlaying)

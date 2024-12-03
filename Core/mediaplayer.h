@@ -62,7 +62,7 @@ private:
 
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
-    SettingsManager m_settingManager;
+    SettingsManager* m_settingManager;
     PlaylistManager m_playListManager;
     bool m_isPlaying = false;
     quint64 m_duration;

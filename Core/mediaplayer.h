@@ -57,6 +57,7 @@ signals:
 
 private:
     QMediaPlayer* m_mediaPlayer;
+    //QMediaPlayer* m_mediaPlayer2; для второго канала
     QAudioOutput* m_audioOutput;
 
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);

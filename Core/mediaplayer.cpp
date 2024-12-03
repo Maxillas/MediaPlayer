@@ -1,6 +1,7 @@
 #include "mediaplayer.h"
 #include <QAudioOutput>
 #include <QAudioDevice>
+#include <QMediaDevices>
 #include <QQmlEngine>
 #include <QTimer>
 
@@ -12,6 +13,10 @@ MediaPlayer::MediaPlayer(QObject *parent)
 
    // m_audioOutput->setDevice()
     m_mediaPlayer->setAudioOutput(m_audioOutput);
+
+    for (const auto& i : QMediaDevices::audioOutputs()) {
+        qDebug() << "as = " << i.description();
+    }
 
     connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this, &MediaPlayer::positionChanged);
     connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this, &MediaPlayer::durationChanged);

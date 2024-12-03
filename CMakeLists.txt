@@ -12,6 +12,11 @@ qt_standard_project_setup()
 
 qt_add_executable(appMediaPlayer
     main.cpp
+    Core/mediaplayer.h Core/mediaplayer.h
+    Core/mediaplayer.h Core/mediaplayer.cpp
+    Core/playlistmodel.h Core/playlistmodel.cpp
+    Core/playlistmanager.h Core/playlistmanager.cpp
+    Core/settingsmanager.h Core/settingsmanager.cpp
 )
 
 qt_add_qml_module(appMediaPlayer
@@ -33,10 +38,7 @@ qt_add_qml_module(appMediaPlayer
         QML_FILES UI/Resources/repeat.png
         QML_FILES UI/Resources/stop.png
     SOURCES
-        Core/mediaplayer.h Core/mediaplayer.h
-        Core/mediaplayer.h Core/mediaplayer.cpp
-        SOURCES Core/playlistmodel.h Core/playlistmodel.cpp
-        SOURCES Core/playlistmanager.h Core/playlistmanager.cpp
+
 )
 
 target_link_libraries(appMediaPlayer

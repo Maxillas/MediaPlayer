@@ -1,5 +1,6 @@
 #include "mediaplayer.h"
 #include <QAudioOutput>
+#include <QAudioDevice>
 #include <QQmlEngine>
 #include <QTimer>
 
@@ -8,6 +9,7 @@ MediaPlayer::MediaPlayer(QObject *parent)
 {
     m_mediaPlayer = new QMediaPlayer(this);
     m_audioOutput = new QAudioOutput(this);
+
    // m_audioOutput->setDevice()
     m_mediaPlayer->setAudioOutput(m_audioOutput);
 
@@ -89,6 +91,11 @@ bool MediaPlayer::isPlaying() const
 PlaylistManager& MediaPlayer::playListManager()
 {
     return m_playListManager;
+}
+
+SettingsManager const *MediaPlayer::settingsManager()
+{
+    return &m_settingManager;
 }
 
 void MediaPlayer::setIsPlaying(bool newIsPlaying)

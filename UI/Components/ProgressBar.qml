@@ -7,7 +7,10 @@ Slider {
   from: 0
   to: 100
   property color textColor: "#5caabe"
-  enabled: AudioPlayer.isPlaying
+  enabled: {
+    if(!AudioPlayer) {return false}
+    AudioPlayer.isPlaying
+  }
   function setPosition(position) {
     value = (position / AudioPlayer.duration) * 100;
   }

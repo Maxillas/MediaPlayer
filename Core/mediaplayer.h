@@ -5,6 +5,7 @@
 #include <QMediaPlayer>
 
 #include "playlistmanager.h"
+#include "settingsmanager.h"
 
 class MediaPlayer : public QObject
 {
@@ -24,6 +25,7 @@ public:
 
    // PlaylistModel& playList();
     PlaylistManager& playListManager();
+    Q_INVOKABLE const SettingsManager* settingsManager();
 
     void setIsPlaying(bool newIsPlaying);
 
@@ -59,6 +61,7 @@ private:
 
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
+    SettingsManager m_settingManager;
     PlaylistManager m_playListManager;
     bool m_isPlaying = false;
     quint64 m_duration;

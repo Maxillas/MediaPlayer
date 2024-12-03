@@ -26,7 +26,11 @@ Rectangle {
         Text {
           id: ch1_bass_value
           anchors.left: parent.left
-          text: "0,0"
+          text: {
+            if(!AudioPlayer) {return ""}
+            (AudioPlayer.settingsManager().c1_bass).toFixed(2)
+          }
+
           font.family: "Arial"
           font.pointSize: 14
           font.bold: true
@@ -54,7 +58,10 @@ Rectangle {
         Text {
           id: ch2_treble_value
           anchors.right: parent.right
-          text: "0,0"
+          text: {
+            if(!AudioPlayer) {return ""}
+            (AudioPlayer.settingsManager().c2_treble).toFixed(2)
+          }
           font.family: "Arial"
           font.pointSize: 14
           font.bold: true
@@ -115,7 +122,10 @@ Rectangle {
         Text {
           id: gradient_value
           anchors.left: parent.left
-          text: "6" + " " + "db/Oct"
+          text: {
+            if(!AudioPlayer) {return ""}
+            AudioPlayer.settingsManager().gradient + " db/Oct"
+          }
           font.family: "Arial"
           font.pointSize: 14
           font.bold: true
@@ -143,7 +153,10 @@ Rectangle {
         Text {
           id: freq_value
           anchors.right: parent.right
-          text: "1000" + " " + "Hz"
+          text: {
+            if(!AudioPlayer) {return ""}
+            AudioPlayer.settingsManager().frequency + " Hz"
+          }
           font.family: "Arial"
           font.pointSize: 14
           font.bold: true
@@ -179,7 +192,10 @@ Rectangle {
         Text {
           id: ch2_bass_value
           anchors.left: parent.left
-          text: "0,0"
+          text: {
+            if(!AudioPlayer) {return ""}
+            (AudioPlayer.settingsManager().c2_bass).toFixed(2)
+          }
           font.family: "Arial"
           font.pointSize: 14
           font.bold: true
@@ -207,7 +223,10 @@ Rectangle {
         Text {
           id: ch1_treble_value
           anchors.right: parent.right
-          text: "0,0"
+          text: {
+            if(!AudioPlayer) {return ""}
+            (AudioPlayer.settingsManager().c1_treble).toFixed(2)
+          }
           font.family: "Arial"
           font.pointSize: 14
           font.bold: true
@@ -228,13 +247,33 @@ Rectangle {
 
     Rectangle {
       id: paramBlock
-      height: root.height / 3
+      height: root.height / 2.35
       width: root.width
-      //color: transparentColor
+      color: transparentColor
+
+      Rectangle {
+        id: red_green_ind
+        height: parent.height
+        width: parent.width / 12
+        anchors.right: parameters.left
+        color: transparentColor
+      }
+
       ParametersView {
+        id: parameters
+        height: parent.height
+        width: parent.width / 2.5
+        anchors.horizontalCenter: parent.horizontalCenter
 
       }
 
+      Rectangle {
+        id: settings
+        height: parent.height
+        width: parent.width / 12
+        anchors.left: parameters.right
+        color: transparentColor
+      }
     }
   }
 }

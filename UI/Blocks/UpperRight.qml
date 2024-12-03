@@ -11,7 +11,7 @@ Rectangle {
 
     Rectangle {
       id: upperBlock
-      height: root.height / 2 / 2.5
+      height: root.height / 2 / 2.7
       width: root.width
       color: transparentColor
 
@@ -81,7 +81,7 @@ Rectangle {
     }
     Rectangle {
       id: filterBlock
-      height: root.height / 2 / 2.5
+      height: root.height / 2 / 2.7
       width: root.width
       color: transparentColor
 
@@ -178,7 +178,7 @@ Rectangle {
     }
     Rectangle {
       id: bottomBlock
-      height: root.height / 2 / 2.5
+      height: root.height / 2 / 2.7
       width: root.width
       color: transparentColor
       Rectangle {
@@ -247,7 +247,7 @@ Rectangle {
 
     Rectangle {
       id: paramBlock
-      height: root.height / 2.35
+      height: root.height / 2.25
       width: root.width
       color: transparentColor
 

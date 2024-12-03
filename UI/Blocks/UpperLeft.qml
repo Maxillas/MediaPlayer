@@ -21,7 +21,7 @@ Rectangle {
     Rectangle {
       id: spacer
       width: root.width
-      height: 20
+      height: 17
       color: transparentColor
     }
 
